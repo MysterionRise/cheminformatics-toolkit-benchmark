@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  chem-elastic:
+    image: amazon/opendistro-for-elasticsearch:1.10.1
+    container_name: chem-elastic-node1
+    environment:
+      - node.name=chem-elastic-node1
+      - cluster.name=chem-odfe-cluster
+      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
+      - opendistro_security.disabled=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - cluster.initial_master_nodes=chem-elastic-node1
+      - discovery.seed_hosts=chem-elastic-node1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - .data/elastic-data1:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - chem-net
+
+volumes:
+  chem-odfe-data1:
+
+networks:
+  chem-net:

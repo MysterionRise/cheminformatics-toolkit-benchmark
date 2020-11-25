@@ -1,3 +1,6 @@
 /.idea/
 *.iml
 /cdk/target/
+/data/
+/venv/
+*.whl
