@@ -12,10 +12,14 @@ if __name__ == '__main__':
     start_time = time.time()
 
     repository = ElasticRepository(host="127.0.0.1", port=9200)
-    sdf = helpers.iterate_file(Path("../data/pubchem/Compound_000000001_000500000.sdf"))
-    repository.index_records(sdf)
-
-    time.sleep(300)
+    # try:
+    #     sdf = helpers.iterate_sdf("../data/pubchem/Compound_000000001_000500000.sdf")
+    #     repository.index_records(sdf)
+    # except ValueError as e:
+    #     print(e)
+    #
+    #
+    # time.sleep(300)
 
     print("--- {} seconds for reading and indexing data ---".format(time.time() - start_time))
 
@@ -24,5 +28,6 @@ if __name__ == '__main__':
 
     alg = SimilarityMatch(target, 0.5)
     similar_records = repository.filter(similarity=alg, limit=20)
-
+    print(similar_records
+          )
     print("--- {} seconds ---".format(time.time() - start_time))
